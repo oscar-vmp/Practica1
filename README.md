@@ -12,4 +12,4 @@ Voy a presentar un informe mensual en que se presentan los datos de los aparatme
 
 Arquitectura Cloud basada en Scrapy + Google Cloud Storage + HIVE + Dataproc
 
-Se ha realizado Crawler con ####Scrapy + Geolocalizacion con ####Geopy que recogemos los datos de la página www.esmadrid.com/agenda-musica-madrid, como los datos del lugar 
+Se ha realizado Crawler con #Scrapy + Geolocalizacion con #Geopy que recogemos los datos de la página www.esmadrid.com/agenda-musica-madrid, como los datos del lugar 
