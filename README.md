@@ -1,4 +1,4 @@
-# Practica 1 (Big Data Adchitecture)
+# Practica 1 (Big Data Architecture)
 ## Idea general
 Recoger datos de eventos de Madrid, en mi caso de la página de www.esmadrid.com/agenda-musica-madrid y ver como estan los precios de la zona para poder hospedarse cerca en algún apartament de Airbnb.
 
@@ -10,4 +10,6 @@ Voy a presentar un informe mensual en que se presentan los datos de los aparatme
 
 ### Arquitectura
 
+Arquitectura Cloud basada en Scrapy + Google Cloud Storage + HIVE + Dataproc
 
+Se ha realizado Crawler con ####Scrapy + Geolocalizacion con ####Geopy que recogemos los datos de la página www.esmadrid.com/agenda-musica-madrid, como los datos del lugar 
