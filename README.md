@@ -36,4 +36,9 @@ Una vez estan cargados los datos, el operador levantará un Cluster y creará la
 - LOAD DATA INPATH 'gs://segmento_practicas_ov/input/airbnb/airbnb_depurado.csv' INTO TABLE airbnb;
 - LOAD DATA INPATH 'gs://segmento_practicas_ov/input/scrapy/conciertos.csv' INTO TABLE eventos;
 - LOAD DATA INPATH 'gs://segmento_practicas_ov/input/distancias.csv' INTO TABLE evento_piso ; 
+- Crear el SQL y caragar el resultado en el segmento de Cloud Storage
 
+Cuando se finalice el proceso el operador apagará el Cluster.
+Una vez se tenga el fichero de salida se procedera a ttrabajar con los datos y presentarlos.
+
+![Grafico del proceso](/graficos/grafico.jpg "Grafico del proceso")
