@@ -6,5 +6,8 @@ Recoger datos de eventos de Madrid, en mi caso de la página de www.esmadrid.com
 Recomendador de apartamentos y situacion de precios en la zona cercana al lugar del concierto.
 
 ### Estrategia del DAaaS
-Voy a presentar un informe mensual en que se presentan los datos de los aparatmentos de Airbnb de Madrid más cercanos al evento.   
+Voy a presentar un informe mensual en que se presentan los datos de los aparatmentos de Airbnb de Madrid más cercanos al evento. Para realizar esta prctica hemos utilizado herramientas en la nube para el manejo de los datos y alguna herramienta en el equipo local para hacer una depuración del fichero de airbnb.
+
+### Arquitectura
+
 
