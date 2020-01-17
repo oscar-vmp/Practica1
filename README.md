@@ -28,4 +28,12 @@ El resultado de la busqueda SQL se almacenará en un fichero que se colocará en
 
 ### Operating Model
 
+Para realizar que funcione esta Arquitectura vamos a de pender de un operador, que primero desde su móvil active el proceso de Crawler que está creada como una Cloud Funtion, después de finalizar el proceso y el fichero se ha creado en la carpeta de input/scrapy de mi segmento en el Cloud Storage, el operador ejecutará la Cloud Funcion que crea la tabla de distancias y la guarada en la carpeta input del Clod Storage. Este proceso se puede hacer con una periodicidad mensual, puesto que los conciertos no varían mucho porque suelen estar programados con bastante antelación.
+Una vez estan cargados los datos, el operador levantará un Cluster y creará las tareas siguientes:
+- Crear la tabla de __airbnb__
+- Crear la tabla de __eventos__
+- Crear la tabla de __distancias__
+- LOAD DATA INPATH 'gs://segmento_practicas_ov/input/airbnb/airbnb_depurado.csv' INTO TABLE airbnb;
+- LOAD DATA INPATH 'gs://segmento_practicas_ov/input/scrapy/conciertos.csv' INTO TABLE eventos;
+- LOAD DATA INPATH 'gs://segmento_practicas_ov/input/distancias.csv' INTO TABLE evento_piso ; 
 
