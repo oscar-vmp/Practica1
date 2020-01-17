@@ -18,7 +18,11 @@ Antes de insertar el fichero de Airbnb en Google Storage, primero ha realizado u
 
 Una vez se tienen los dos ficheros, el de Scrapy y el de Airbnb depurado, se ha realizado un proceso de crear un fichero de distancias. Lo que se ha hecho es leer de Google Storage los dos ficheros y generar una rutina en el que cada evento obtenemos su Geolocalización, después lo cruzamos con cada unna de las Geolocalizaciones del fichero de Airbnb y calculamos la distancia con cada uno de los aparatmentos, en este caso calculado en metros. Para realizar este cálculo se ha vuelto a utilizar el Api de Geopy. Una vez generado estos datos se han guardado en un fichero csv. Para realizar esta tarea también se ha ejecutado mediante una Cloud Function. 
 
-Una vez se tienen los tres ficheros en nuestro segmento de Google Storage, se van a crear tres tablas en HIVE. Aqui por ejemplo, se ha realizado una query que para un concierto en concreto saque todos los apartamentos que se encuentren a una distancia del evento de un radio de 1 Km.
+Una vez se tienen los tres ficheros en nuestro segmento de Google Storage, se van a crear tres tablas en HIVE. 
+
+![Tablas de HIVE](/graficos/tablas.jpg "Tablas de HIVE")
+
+Aqui por ejemplo, se ha realizado una query que para un concierto en concreto saque todos los apartamentos que se encuentren a una distancia del evento de un radio de 1 Km.
 
 El resultado de la busqueda SQL se almacenará en un fichero que se colocará en nuestro segmento de Google Storage.
 
