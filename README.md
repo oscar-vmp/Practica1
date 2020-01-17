@@ -21,3 +21,7 @@ Una vez se tienen los dos ficheros, el de Scrapy y el de Airbnb depurado, se ha 
 Una vez se tienen los tres ficheros en nuestro segmento de Google Storage, se van a crear tres tablas en HIVE. Aqui por ejemplo, se ha realizado una query que para un concierto en concreto saque todos los apartamentos que se encuentren a una distancia del evento de un radio de 1 Km.
 
 El resultado de la busqueda SQL se almacenará en un fichero que se colocará en nuestro segmento de Google Storage.
+
+### Operating Model
+
+
