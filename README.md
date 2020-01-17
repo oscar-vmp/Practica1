@@ -43,30 +43,29 @@ Una vez se tenga el fichero de salida se procedera a ttrabajar con los datos y p
 
 ![Grafico del proceso](/graficos/grafico.jpg "Grafico del proceso")
 
+from google.cloud import storage
+from scrapy.crawler import CrawlerProcess
+from datetime import datetime
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
 
-`from google.cloud import storage`
-`from scrapy.crawler import CrawlerProcess`
-`from datetime import datetime`
-`from geopy.geocoders import Nominatim`
-`from geopy.exc import GeocoderTimedOut`
+import scrapy
+import json
+import tempfile
+TEMPORARY_FILE = tempfile.NamedTemporaryFile(delete=False, mode='w+t')
 
-`import scrapy`
-`import json`
-`import tempfile`
-`TEMPORARY_FILE = tempfile.NamedTemporaryFile(delete=False, mode='w+t')`
-
-`def upload_file_to_bucket(bucket_name, blob_file, destination_file_name):`
-    `"""Uploads a file to the bucket."""`
-   `storage_client = storage.Client()`
-   `bucket = storage_client.get_bucket(bucket_name)`
-   `blob = bucket.blob(destination_file_name)`
-   `blob.upload_from_filename(blob_file.name, content_type='text/csv')`
+def upload_file_to_bucket(bucket_name, blob_file, destination_file_name):
+   
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(destination_file_name)
+    blob.upload_from_filename(blob_file.name, content_type='text/csv')
 
 
 
 class ConciertosMadridSpider(scrapy.Spider):
 	name = 'conciertosmadrid'
-    # Podeis cambiar la url inicial por otra u otras paginas
+   
 	start_urls = ['https://www.esmadrid.com/conciertos-no-te-puedes-perder-madrid-2020/']
     
 	id=1
@@ -75,8 +74,7 @@ class ConciertosMadridSpider(scrapy.Spider):
 	
 
 	def parse(self, response):
-        # Aqui scrapeamos los datos y los imprimimos a un fichero
-        #for article in response.css('div.field-group-link-format.group_link_wrappergroup-link-wrapper.field-group-link a::attr(href)'):
+       
 		title_text = response.css('h1.field.field-name-title-field.field-type-text.field-label-hidden div.field-items div.field-item.odd.first.last::text').extract_first()
 		dia_text = response.css('div.field.field-name-field-when.field-type-text.field-label-above::text').extract_first()
 		tipo_text=response.css('div.fieldset-wrapper div.group-wrapper-direction.field-group-div div.field.field-name-field-via-type.field-type-taxonomy-term-reference.field-label-hidden div.field-items div.field-item.odd::text').extract_first() 
@@ -126,7 +124,7 @@ class ConciertosMadridSpider(scrapy.Spider):
 			self.id = self.id + 1        
 
 
-         # Aqui hacemos crawling (con el follow)
+         #
 		for next_page in response.css('div.ds-1col.node.node-event.view-mode-grid_2col.clearfix div.field-group-link-format.group_link_wrappergroup-link-wrapper.field-group-link a'):
 			self.count = self.count + 1
 			if (self.count < self.COUNT_MAX):
