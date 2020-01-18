@@ -43,54 +43,58 @@ Una vez se tenga el fichero de salida se procedera a ttrabajar con los datos y p
 
 ![Grafico del proceso](/graficos/grafico.jpg "Grafico del proceso")
 
-from google.cloud import storage
-from scrapy.crawler import CrawlerProcess
-from datetime import datetime
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut
-
-import scrapy
-import json
-import tempfile
-TEMPORARY_FILE = tempfile.NamedTemporaryFile(delete=False, mode='w+t')
-
-def upload_file_to_bucket(bucket_name, blob_file, destination_file_name):
-   
-    storage_client = storage.Client()
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(destination_file_name)
-    blob.upload_from_filename(blob_file.name, content_type='text/csv')
 
 
 
-class ConciertosMadridSpider(scrapy.Spider):
-	name = 'conciertosmadrid'
-   
-	start_urls = ['https://www.esmadrid.com/conciertos-no-te-puedes-perder-madrid-2020/']
+
+
+	from google.cloud import storage
+	from scrapy.crawler import CrawlerProcess
+	from datetime import datetime
+	from geopy.geocoders import Nominatim
+	from geopy.exc import GeocoderTimedOut
+
+	import scrapy
+	import json
+	import tempfile
+	TEMPORARY_FILE = tempfile.NamedTemporaryFile(delete=False, mode='w+t')
+
+	def upload_file_to_bucket(bucket_name, blob_file, destination_file_name):
+    	"""Uploads a file to the bucket."""
+   	 storage_client = storage.Client()
+   	 bucket = storage_client.get_bucket(bucket_name)
+    	blob = bucket.blob(destination_file_name)
+   	 blob.upload_from_filename(blob_file.name, content_type='text/csv')
+
+
+
+	class ConciertosMadridSpider(scrapy.Spider):
+		name = 'conciertosmadrid'
+    		start_urls = ['https://www.esmadrid.com/conciertos-no-te-puedes-perder-madrid-2020/']
     
-	id=1
-	COUNT_MAX = 80
-	count = 0	
+		id=1
+		COUNT_MAX = 80
+		count = 0	
 	
 
-	def parse(self, response):
-       
-		title_text = response.css('h1.field.field-name-title-field.field-type-text.field-label-hidden div.field-items div.field-item.odd.first.last::text').extract_first()
-		dia_text = response.css('div.field.field-name-field-when.field-type-text.field-label-above::text').extract_first()
-		tipo_text=response.css('div.fieldset-wrapper div.group-wrapper-direction.field-group-div div.field.field-name-field-via-type.field-type-taxonomy-term-reference.field-label-hidden div.field-items div.field-item.odd::text').extract_first() 
-		dire_text= response.css('div.fieldset-wrapper div.group-wrapper-direction.field-group-div div.field.field-name-field-address.field-type-text.field-label-hidden div.field-items div.field-item.odd::text').extract_first()
-		cp_text= response.css('div.fieldset-wrapper div.group-wrapper-direction.field-group-div div.field.field-name-field-postal-code.field-type-text.field-label-hidden div.field-items div.field-item.odd::text').extract_first()
-		zona_text= response.css('div.fieldset-wrapper div.field.field-name-field-turisitic-zone.field-type-taxonomy-term-reference.field-label-above::text').extract_first()
-		direccion_text = "%s %s %s" % (tipo_text,dire_text,cp_text)
-		
-		evento="concierto"
-		geolocator = Nominatim(user_agent="MyApp")
-		dir_geopy = "%s %s , %s" % (tipo_text,dire_text,"Madrid")
-		location= None
-		latitud=0.0
-		longitud=0.0
-		valor=False
-		try:
+		def parse(self, response):
+        	
+			title_text = response.css('h1.field.field-name-title-field.field-type-text.field-label-hidden div.field-items div.field-item.odd.first.last::text').extract_first()
+			dia_text = response.css('div.field.field-name-field-when.field-type-text.field-label-above::text').extract_first()
+			tipo_text=response.css('div.fieldset-wrapper div.group-wrapper-direction.field-group-div div.field.field-name-field-via-type.field-type-taxonomy-term-reference.field-label-hidden div.field-items div.field-item.odd::text').extract_first() 
+			dire_text= response.css('div.fieldset-wrapper div.group-wrapper-direction.field-group-div div.field.field-name-field-address.field-type-text.field-label-hidden div.field-items div.field-item.odd::text').extract_first()
+			cp_text= response.css('div.fieldset-wrapper div.group-wrapper-direction.field-group-div div.field.field-name-field-postal-code.field-type-text.field-label-hidden div.field-items div.field-item.odd::text').extract_first()
+			zona_text= response.css('div.fieldset-wrapper div.field.field-name-field-turisitic-zone.field-type-taxonomy-term-reference.field-label-above::text').extract_first()
+			direccion_text = "%s %s %s" % (tipo_text,dire_text,cp_text)
+			
+			evento="concierto"
+			geolocator = Nominatim(user_agent="MyApp")
+			dir_geopy = "%s %s , %s" % (tipo_text,dire_text,"Madrid")
+			location= None
+			latitud=0.0
+			longitud=0.0
+			valor=False
+			try:
 			location = geolocator.geocode(dir_geopy, timeout=3)
 		except GeocoderTimedOut: 
 			valor=True
@@ -124,7 +128,7 @@ class ConciertosMadridSpider(scrapy.Spider):
 			self.id = self.id + 1        
 
 
-         #
+         # Aqui hacemos crawling (con el follow)
 		for next_page in response.css('div.ds-1col.node.node-event.view-mode-grid_2col.clearfix div.field-group-link-format.group_link_wrappergroup-link-wrapper.field-group-link a'):
 			self.count = self.count + 1
 			if (self.count < self.COUNT_MAX):
