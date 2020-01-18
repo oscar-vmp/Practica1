@@ -406,6 +406,11 @@ El resultado se guarda también en una carpeta de nuestro segmento:
 
 ![Fichero distancias](/imagenes/distancias_sg.jpg "Fichero distancias")
 
+Ahora que ya disponemos de todos los ficheros de entrada se procede acrear un Cluster, con los siguientes parámetros:
+
+![Fichero cluster 1](/imagenes/c1.jpg "Fichero cluster 1")
+![Fichero cluster 2](/imagenes/c2.jpg "Fichero cluster 2")
+![Fichero cluster 3](/imagenes/c3.jpg "Fichero cluster 3")
 
 La creacion de tablas en HIVE:
 
