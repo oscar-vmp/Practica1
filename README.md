@@ -146,3 +146,125 @@ Una vez se tenga el fichero de salida se procedera a ttrabajar con los datos y p
 		upload_file_to_bucket(BUCKET_NAME, TEMPORARY_FILE, DESTINATION_FILE_NAME)
 		TEMPORARY_FILE.close()
 		return "Success!"
+
+El codifo d el siguiente Cloud Functon:
+
+	from google.cloud import storage
+	from datetime import datetime
+
+	import json
+	import tempfile
+
+	TEMPORARY_FILE = tempfile.NamedTemporaryFile(delete=False, mode='w+t')
+
+	def upload_file_to_bucket(bucket_name, blob_file, destination_file_name):
+	    """Uploads a file to the bucket."""
+	    storage_client = storage.Client()
+	    bucket = storage_client.get_bucket(bucket_name)
+	    blob = bucket.blob(destination_file_name)
+	    blob.upload_from_filename(blob_file.name, content_type='text/csv')
+
+	def leer_fichero(bucked_name,entrada):
+		datos=[]
+		storage_client = storage.Client()
+		bucket = storage_client.get_bucket(bucked_name)
+		blob = bucket.get_blob(entrada)
+		downloaded_blob = blob.download_as_string()
+		s1 = str(downloaded_blob, encoding = 'utf-8')
+		lineas=s1.split('\n')
+		for linea in lineas:
+			linea = linea.strip()
+			campos = linea.split("|")
+		
+			if len(campos)==9:
+				dato = {'id':campos[0],
+						'longitud':campos[8],
+						'latitud':campos[7]}
+				datos.append(dato)
+		return datos
+   
+
+	def leer_fichero_airbnb(bucked_name,entrada):
+		datos=[]
+		storage_client = storage.Client()
+		bucket = storage_client.get_bucket(bucked_name)
+		blob = bucket.get_blob(entrada)
+		downloaded_blob = blob.download_as_string()
+		s1 = str(downloaded_blob, encoding = 'utf-8')
+		lineas=s1.split('\n')
+		for linea in lineas:
+			linea = linea.strip()
+			campos = linea.split(";")
+			if len(campos)==88:
+				dato = {'id':campos[0],
+						'longitud':campos[45],
+						'latitud':campos[44]}
+				datos.append(dato)
+		return datos
+	def formatear_linea(dato):
+	    linea = []  #una lista con los str a imprimir
+	    linea.append(dato['id'])
+	    linea.append(dato['longitud'])
+	    linea.append(dato['latitud'])
+ 	   linea = '|'.join(linea)
+	    linea += '\n'
+	    return linea
+
+	def formatear_linea_airbnb(dato):
+	    linea = []  #una lista con los str a imprimir
+	    linea.append(dato['id'])
+	    linea.append(dato['longitud'])
+	    linea.append(dato['latitud'])
+	    linea = '|'.join(linea)
+	    linea += '\n'
+	    return linea
+
+	def formatear_linea_resultado(dato):
+	    linea = []  #una lista con los str a imprimir
+	    linea.append(str(dato['evento']))
+	    linea.append(str(dato['piso']))
+	    linea.append(str(dato['distancia']))
+	    linea = '|'.join(linea)
+	    linea += '\n'
+	    return linea
+
+	def escribir_fichero_resultado(bucked_name,fichero, datos):
+	    TEMPORARY_FILE.writelines(f"evento|piso|distancia\n")
+	    for dato in datos:
+	        linea= formatear_linea_resultado(dato)
+	        TEMPORARY_FILE.writelines(f"{linea}")
+	    TEMPORARY_FILE.seek(0)
+	    upload_file_to_bucket(bucked_name, TEMPORARY_FILE, fichero)
+	    TEMPORARY_FILE.close()
+    
+
+	
+	def calcularDistancia(punto1,punto2):
+		from geopy.distance import geodesic
+		return geodesic(punto1, punto2).meters 
+
+	def calcularDistancias(eventos,pisos):
+		resultados=[]
+		for evento in eventos:
+		for piso in pisos[1:]:
+	            
+			punto1=(float(evento['latitud']),float(evento['longitud']))
+			punto2=(float(piso['latitud']),float(piso['longitud']))
+
+				distancia=calcularDistancia(punto1,punto2)
+				resultado={ 'evento':evento['id'],
+							'piso':piso['id'],
+							'distancia':distancia}
+				resultados.append(resultado)
+		return resultados
+
+	def activate(request):
+		now = datetime.now() 
+		request_json = request.get_json()
+		BUCKET_NAME = 'segmento_practicas_ov'
+		FILE_NAME = 'input/scrapy/conciertos.csv'
+		eventos = leer_fichero(BUCKET_NAME,'input/scrapy/conciertos.csv')
+		pisos = leer_fichero_airbnb(BUCKET_NAME,'input/airbnb/airbnb_depurado.csv')
+		resultados=calcularDistancias(eventos,pisos)
+		escribir_fichero_resultado(BUCKET_NAME,'input/distancias.csv',resultados)
+		return "Succes"
