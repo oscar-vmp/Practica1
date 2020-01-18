@@ -453,3 +453,6 @@ Como se puede observar el resultado lo ha guarda una carpeta de nuestro segmento
 ![Fichero de resultados](/imagenes/resultado_sg.jpg "Fichero de resultados")
 
 
+Una vez que se tiene el fichero de resultados, procedemos a explotar los datos obtenidos:
+
+![Fichero de saliada](/imagenes/salida.jpg "Fichero de salida")
