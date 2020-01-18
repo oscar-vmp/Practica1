@@ -420,7 +420,7 @@ Ahora se procede a crear dos **Tareas**:
 
 La primera va a crear y cargar las tablas en HIVE:
 
-![Fichero tarea 1](/imagenes/cluster.jpg "Fichero tarea 1")
+![Fichero tarea 1](/imagenes/t1.jpg "Fichero tarea 1")
 
 La creacion de tablas en HIVE:
 
