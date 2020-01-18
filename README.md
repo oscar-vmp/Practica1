@@ -266,6 +266,9 @@ El fichero __main.py__
 		TEMPORARY_FILE.close()
 		return "Success!"
 
+
+![Fichero eventos](/imagenes/conciertos_sc.jpg "Fichero eventos")
+
 El codifo d el siguiente Cloud Functon:
 
 	from google.cloud import storage
