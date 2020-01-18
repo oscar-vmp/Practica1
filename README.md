@@ -402,7 +402,7 @@ El fichero __main.py__
 		escribir_fichero_resultado(BUCKET_NAME,'input/distancias.csv',resultados)
 		return "Succes"
 
-El resultado se guarda también en uina carpeta de nuestro segmento:
+El resultado se guarda también en una carpeta de nuestro segmento:
 
 ![Fichero distancias](/imagenes/distancias_sg.jpg "Fichero distancias")
 
