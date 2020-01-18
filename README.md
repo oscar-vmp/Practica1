@@ -270,10 +270,11 @@ El codifo d el siguiente Cloud Functon:
 		return "Succes"
 
 La salida
-    INSERT OVERWRITE DIRECTORY 'gs://segmento_practicas_ov/output' ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' 
-	select 	e.*,ep.id,ep.distancia, a.ID,a.Name, a.Street,a.Price, a.Latitude, a.Longitude, a.Bedrooms, a.Beds, a.Bathrooms, 		a.Room_Type 
-	from eventos e INNER JOIN evento_piso ep 
-	ON e.evento_id=ep.evento_id 
-	INNER JOIN airbnb a 
-	ON ep.id=a.id 
-	where e.descripcion='Maldita Nerea' and ep.distancia < 1000;
+		select 	e.*,ep.id,ep.distancia, a.ID,a.Name, a.Street,a.Price, a.Latitude, a.Longitude, a.Bedrooms, a.Beds, a.Bathrooms, 		a.Room_Type 
+`INSERT OVERWRITE DIRECTORY 'gs://segmento_practicas_ov/output' ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' 
+		`select 	e.*,ep.id,ep.distancia, a.ID,a.Name, a.Street,a.Price, a.Latitude, a.Longitude, a.Bedrooms, a.Beds, a.Bathrooms, 		a.Room_Type `
+		`from eventos e INNER JOIN evento_piso ep `
+		`ON e.evento_id=ep.evento_id `
+		`INNER JOIN airbnb a `
+		`ON ep.id=a.id `
+		`where e.descripcion='Maldita Nerea' and ep.distancia < 1000;`
