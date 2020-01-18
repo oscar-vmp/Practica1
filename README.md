@@ -155,7 +155,7 @@ A continuación se detalla las **Cloud Functions** realizadas y ejecutadas:
 
 ![Cloud Functions](/imagenes/cloud_functions.jpg "Cloud Functions")
 
-Primera Cloud Function ejcutada es la llamada **function-scrapy-conciertos-1**, que es la encargada de hacer el Crawler y la geolocalizacion: 
+Primera Cloud Function ejecutada es la llamada **function-scrapy-conciertos-1**, que es la encargada de hacer el Crawler y la geolocalizacion: 
 
 El fichro de __requerimients.txt__
 
@@ -267,10 +267,20 @@ El fichero __main.py__
 		return "Success!"
 
 
+El resultado se guarda en una carpeta de nuestro segmento de Google Storage: 
+
 ![Fichero eventos](/imagenes/conciertos_sc.jpg "Fichero eventos")
 
-El codifo d el siguiente Cloud Functon:
+Después se ejecuta la siguiente Cloud Function llamada **function-ficheros-1**, con esta Cloud Funtion creamos un fichero de distancias entre el evento y los apartamentsos de Airbnb:
 
+El fichro de __requerimients.txt__
+
+	# Function dependencies, for example:
+	# package>=version
+	google-cloud-storage
+	geopy
+
+El fichero __main.py__
 	from google.cloud import storage
 	from datetime import datetime
 
@@ -391,6 +401,12 @@ El codifo d el siguiente Cloud Functon:
 		resultados=calcularDistancias(eventos,pisos)
 		escribir_fichero_resultado(BUCKET_NAME,'input/distancias.csv',resultados)
 		return "Succes"
+
+El resultado se guarda también en uina carpeta de nuestro segmento:
+
+![Fichero distancias](/imagenes/distancias_sg.jpg "Fichero distancias")
+
+
 La creacion de tablas en HIVE:
 
 	CREATE TABLE airbnb (ID INT, Listing_Url STRING, Scrape_ID STRING, Last_Scraped STRING, Name STRING, Summary STRING, Space 	STRING, Description STRING, Experiences_Offered STRING, Neighborhood_Overview STRING, Notes STRING, Transit STRING, Access STRING, Interaction STRING, House_Rules STRING, Thumbnail_Url STRING, Medium_Url STRING, Picture_Url STRING, XL_Picture_Url STRING, Host_ID STRING, Host_URL STRING, Host_Name STRING, Host_Since STRING, Host_Location STRING, Host_About STRING, Host_Response_Time STRING, Host_Response_Rate STRING, Host_Acceptance_Rate STRING, Host_Thumbnail_Url STRING, Host_Picture_Url STRING, Host_Neighbourhood STRING, Host_Listings_Count STRING, Host_Total_Listings_Count STRING, Host_Verifications STRING, Street STRING, Neighbourhood STRING, Neighbourhood_Cleansed STRING, Neighbourhood_Group_Cleansed STRING, City STRING, State STRING, Zipcode STRING, Market STRING, Smart_Location STRING, Country_Code STRING, Country STRING, Latitude STRING, Longitude STRING, Property_Type STRING, Room_Type STRING, Accommodates STRING, Bathrooms STRING, Bedrooms STRING, Beds STRING, Bed_Type STRING, Amenities STRING, Square_Feet STRING, Price FLOAT, Weekly_Price STRING, Monthly_Price STRING, Security_Deposit STRING, Cleaning_Fee STRING, Guests_Included STRING, Extra_People STRING, Minimum_Nights INT, Maximum_Nights INT, Calendar_Updated STRING, Has_Availability STRING, Availability_30 STRING, Availability_60 STRING, Availability_90 STRING, Availability_365 STRING, Calendar_last_Scraped STRING, Number_of_Reviews STRING, First_Review STRING, Last_Review STRING, Review_Scores_Rating STRING, Review_Scores_Accuracy STRING, Review_Scores_Cleanliness STRING, Review_Scores_Checkin STRING, Review_Scores_Communication STRING, Review_Scores_Location STRING, Review_Scores_Value STRING, License STRING, Jurisdiction_Names STRING, Cancellation_Policy STRING, Calculated_host_listings_count STRING, Reviews_per_Month STRING, Geolocation STRING, Features STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ';'; 
