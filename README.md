@@ -54,6 +54,8 @@ Para realizar esta depuracion se ha utilizado la herramienta de **Qlikview**, se
 
 ![Fichero airbnb-depurado](/imagenes/airbnb_depuerado.jpg "Fichero airbnb-depurado")
 
+El Script realizado para la depuración fue el siguiente:
+
 	LOAD 
 		ID, 
 		[Listing Url], 
@@ -149,8 +151,19 @@ Para realizar esta depuracion se ha utilizado la herramienta de **Qlikview**, se
 	(txt, utf8, embedded labels, delimiter is ';', msq);
 
 
+![Cloud Functions](/imagenes/cloud_functions.jpg "Cloud Functions")
 
-Primera Cloud Function 
+Primera Cloud Function ejcutada es la llamada **function-scrapy-conciertos-1**, que es la encargada de hacer el Crawler y la geolocalizacion: 
+
+El fichro de __requerimients.txt__
+
+	# Function dependencies, for example:
+	# package>=version
+	google-cloud-storage
+	scrapy
+	geopy
+
+El fichero __main.py__
 
 	from google.cloud import storage
 	from scrapy.crawler import CrawlerProcess
