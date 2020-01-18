@@ -95,54 +95,54 @@ Una vez se tenga el fichero de salida se procedera a ttrabajar con los datos y p
 			longitud=0.0
 			valor=False
 			try:
-			location = geolocator.geocode(dir_geopy, timeout=3)
-		except GeocoderTimedOut: 
-			valor=True
-   
-		if valor:
-			try:
-				dir_geopy = "%s , %s" % (dire_text,"Madrid")
 				location = geolocator.geocode(dir_geopy, timeout=3)
 			except GeocoderTimedOut: 
-				latitud=0.0
-				longitud=0.0            
-		if location:
-			latitud=  location.latitude
-			longitud=  location.longitude
-		else:
-			try:
-				dir_geopy = "%s , %s" % (dire_text,"Madrid")
-				location = geolocator.geocode(dir_geopy)
-				if location:
-					latitud=  location.latitude
-					longitud=  location.longitude
-				else:
+				valor=True
+   
+			if valor:
+				try:
+					dir_geopy = "%s , %s" % (dire_text,"Madrid")
+					location = geolocator.geocode(dir_geopy, timeout=3)
+				except GeocoderTimedOut: 
 					latitud=0.0
-					longitud=0.0    
-			except GeocoderTimedOut: 
-				latitud=0.0
-				longitud=0.0   
-        
-		if dia_text is not None:
-			TEMPORARY_FILE.writelines(f"{self.id}|{evento}|{title_text}|{dia_text}|{direccion_text}|{cp_text}|{zona_text}|{latitud}|{longitud}\n")
-			self.id = self.id + 1        
+					longitud=0.0            
+			if location:
+				latitud=  location.latitude
+				longitud=  location.longitude
+			else:
+				try:
+					dir_geopy = "%s , %s" % (dire_text,"Madrid")
+					location = geolocator.geocode(dir_geopy)
+					if location:
+						latitud=  location.latitude
+						longitud=  location.longitude
+					else:
+						latitud=0.0
+						longitud=0.0    
+				except GeocoderTimedOut: 
+					latitud=0.0
+					longitud=0.0   
+	        
+			if dia_text is not None:
+				TEMPORARY_FILE.writelines(f"{self.id}|{evento}|{title_text}|{dia_text}|{direccion_text}|{cp_text}|{zona_text}|{latitud}|{longitud}\n")
+				self.id = self.id + 1        
 
 
-         # Aqui hacemos crawling (con el follow)
-		for next_page in response.css('div.ds-1col.node.node-event.view-mode-grid_2col.clearfix div.field-group-link-format.group_link_wrappergroup-link-wrapper.field-group-link a'):
-			self.count = self.count + 1
-			if (self.count < self.COUNT_MAX):
-				yield response.follow(next_page, self.parse)
+	         # Aqui hacemos crawling (con el follow)
+			for next_page in response.css('div.ds-1col.node.node-event.view-mode-grid_2col.clearfix div.field-group-link-format.group_link_wrappergroup-link-wrapper.field-group-link a'):
+				self.count = self.count + 1
+				if (self.count < self.COUNT_MAX):
+					yield response.follow(next_page, self.parse)
                 
-def activate(request):
-	now = datetime.now() 
-	request_json = request.get_json()
-	BUCKET_NAME = 'segmento_practicas_ov'
-	DESTINATION_FILE_NAME = 'input/scrapy/conciertos.csv'
-	process = CrawlerProcess({'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'})
-	process.crawl(ConciertosMadridSpider)
-	process.start()    
-	TEMPORARY_FILE.seek(0)
-	upload_file_to_bucket(BUCKET_NAME, TEMPORARY_FILE, DESTINATION_FILE_NAME)
-	TEMPORARY_FILE.close()
-	return "Success!"
+	def activate(request):
+		now = datetime.now() 
+		request_json = request.get_json()
+		BUCKET_NAME = 'segmento_practicas_ov'
+		DESTINATION_FILE_NAME = 'input/scrapy/conciertos.csv'
+		process = CrawlerProcess({'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'})
+		process.crawl(ConciertosMadridSpider)
+		process.start()    
+		TEMPORARY_FILE.seek(0)
+		upload_file_to_bucket(BUCKET_NAME, TEMPORARY_FILE, DESTINATION_FILE_NAME)
+		TEMPORARY_FILE.close()
+		return "Success!"
