@@ -467,7 +467,7 @@ Se puede ver que el proceso se ha ejecutado correctamente
 
 ![Wordcount log](/imagenes/ejecucion_tarea_wc.jpg "Wordcount log")
 
-Y ahora hay que comprobar que los ficheros los ha colocado en la carpeta de nuestro segment llamada 
+Y ahora hay que comprobar que los ficheros los ha colocado en la carpeta __output_wordcount__ de nuestro segmento
 
 ![Resultado Wordcount](/imagenes/resultado_wc.jpg "Resultado Wordcount")
 
