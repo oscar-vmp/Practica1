@@ -434,7 +434,7 @@ El SQL de creacion de tablas en HIVE:
 
 La segunda Tarea realiza un SELECT que el resultado lo guardará en una carpeta de nuestro segmento:
 
-![Fichero tarea 2](/imagenes/t1.jpg "Fichero tarea 2")
+![Fichero tarea 2](/imagenes/t2.jpg "Fichero tarea 2")
 
 El SQL para la creación del fichero de salida con los resultados es le siguiente:
 
@@ -446,3 +446,10 @@ El SQL para la creación del fichero de salida con los resultados es le siguient
 	INNER JOIN airbnb a 
 	ON ep.id=a.id 
 	WHERE e.descripcion='Maldita Nerea' and ep.distancia < 1000;
+
+
+Como se puede observar el resultado lo ha guarda una carpeta de nuestro segmento:
+
+![Fichero de resultados](/imagenes/resultado_sg.jpg "Fichero de resultados")
+
+
