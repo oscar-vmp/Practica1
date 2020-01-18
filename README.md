@@ -151,6 +151,8 @@ El Script realizado para la depuración fue el siguiente:
 	(txt, utf8, embedded labels, delimiter is ';', msq);
 
 
+A continuación se detalla las **Cloud Functions** realizadas y ejecutadas:
+
 ![Cloud Functions](/imagenes/cloud_functions.jpg "Cloud Functions")
 
 Primera Cloud Function ejcutada es la llamada **function-scrapy-conciertos-1**, que es la encargada de hacer el Crawler y la geolocalizacion: 
