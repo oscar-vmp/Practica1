@@ -462,3 +462,12 @@ Una vez que se tiene el fichero de resultados, procedemos a explotar los datos o
 Se realiza una Tarea en el Cluster, se va utilizar el fichero de entrada del scrapy que que esta en el Cloud Storage, se va a procesar utilizando el **Wordcount**, y el resultado lo coloque en una carpeta de nuestro segmento.
 
 ![Wordcount](/imagenes/tarea_hadoop.jpg "Wordcount")
+
+Se puede ver que el proceso se ha ejecutado correctamente
+
+![Wordcount log](/imagenes/ejecucion_tarea_wc.jpg "Wordcount log")
+
+Y ahora hay que comprobar que los ficheros los ha colocado en la carpeta de nuestro segment llamada 
+
+![Resultado Wordcount](/imagenes/resultado_wc.jpg "Resultado Wordcount")
+
