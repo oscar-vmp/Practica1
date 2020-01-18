@@ -46,7 +46,11 @@ Una vez se tenga el fichero de salida se procedera a ttrabajar con los datos y p
 
 ### Desarrollo
 
-Proceso de ETL para la limpieza de datos
+El primer proceso a realizar fue depurar el fichero de **airbnb-listings.csv**, ya que como se puede ver en la imagen :
+
+![Fichero airbnb-listings](/imagenes/Fichero airbnb-listings.jpg "Fichero airbnb-listings")
+
+Para realizar e
 
 	LOAD 
 		ID, 
