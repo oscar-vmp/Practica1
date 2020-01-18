@@ -50,7 +50,9 @@ El primer proceso a realizar fue depurar el fichero de **airbnb-listings.csv**, 
 
 ![Fichero airbnb-listings](/imagenes/airbnb-listings.jpg "Fichero airbnb-listings")
 
-Para realizar e
+Para realizar esta depuracion se ha utilizado la herramienta de **Qlikview**, se han quitado caracteres como retornos de carro, caracteres raros, etc.. El resultado final es el que se presenta a continuación:
+
+![Fichero airbnb-depurado](/imagenes/airbnb_depuerado.jpg "Fichero airbnb-depurado")
 
 	LOAD 
 		ID, 
