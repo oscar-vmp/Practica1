@@ -456,3 +456,7 @@ Como se puede observar el resultado lo ha guarda una carpeta de nuestro segmento
 Una vez que se tiene el fichero de resultados, procedemos a explotar los datos obtenidos:
 
 ![Fichero de saliada](/imagenes/salida.jpg "Fichero de salida")
+
+## Parte 4
+
+Se realiza una Tarea en el Cluster, se va utilizar el fichero de entrada del scrapy que que esta en el Cloud Storage, se va a procesar utilizando el **Wordcount**, y el resultado lo coloque en una carpeta de nuestro segmento.
