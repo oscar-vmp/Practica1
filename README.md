@@ -316,8 +316,8 @@ El codifo d el siguiente Cloud Functon:
 			campos = linea.split(";")
 			if len(campos)==88:
 				dato = {'id':campos[0],
-						'longitud':campos[45],
-						'latitud':campos[44]}
+						'longitud':campos[46],
+						'latitud':campos[45]}
 				datos.append(dato)
 		return datos
 	def formatear_linea(dato):
@@ -348,13 +348,14 @@ El codifo d el siguiente Cloud Functon:
 	    return linea
 
 	def escribir_fichero_resultado(bucked_name,fichero, datos):
-	    TEMPORARY_FILE.writelines(f"evento|piso|distancia\n")
-	    for dato in datos:
-	        linea= formatear_linea_resultado(dato)
-	        TEMPORARY_FILE.writelines(f"{linea}")
-	    TEMPORARY_FILE.seek(0)
-	    upload_file_to_bucket(bucked_name, TEMPORARY_FILE, fichero)
-	    TEMPORARY_FILE.close()
+ 	   with tempfile.NamedTemporaryFile(delete=False, mode='w+t') as TEMPORARY_FILE:
+	    	TEMPORARY_FILE.writelines(f"evento|piso|distancia\n")
+	    	for dato in datos:
+	        	linea= formatear_linea_resultado(dato)
+	        	TEMPORARY_FILE.writelines(f"{linea}")
+	    	TEMPORARY_FILE.seek(0)
+ 	   	upload_file_to_bucket(bucked_name, TEMPORARY_FILE, fichero)
+ 	   	TEMPORARY_FILE.close()
     
 
 	
