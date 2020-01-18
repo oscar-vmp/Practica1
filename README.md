@@ -269,8 +269,8 @@ El codifo d el siguiente Cloud Functon:
 		escribir_fichero_resultado(BUCKET_NAME,'input/distancias.csv',resultados)
 		return "Succes"
 
-La salida:
-	INSERT OVERWRITE DIRECTORY 'gs://segmento_practicas_ov/output' ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' 
+La salida
+    INSERT OVERWRITE DIRECTORY 'gs://segmento_practicas_ov/output' ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' 
 	select 	e.*,ep.id,ep.distancia, a.ID,a.Name, a.Street,a.Price, a.Latitude, a.Longitude, a.Bedrooms, a.Beds, a.Bathrooms, 		a.Room_Type 
 	from eventos e INNER JOIN evento_piso ep 
 	ON e.evento_id=ep.evento_id 
